@@ -1,6 +1,7 @@
 package com.fanap.radman.ui
 
 import android.content.Context
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
@@ -23,7 +24,7 @@ class CustomTitleView @JvmOverloads constructor(
 ) : RelativeLayout(context, attrs, defStyle), TitleViewAdapter.Provider {
     var mTitleView: ImageView
     var walletImageView: ImageView
-    lateinit var nextFoundFocusableViewInLayout:View
+    lateinit var nextFoundFocusableViewInLayout: View
     val mTitleViewAdapter = object : TitleViewAdapter() {
 
         override fun getSearchAffordanceView(): View {
@@ -36,11 +37,11 @@ class CustomTitleView @JvmOverloads constructor(
 
     }
 
-
     override fun focusSearch(focused: View?, direction: Int): View {
         // val a = nextFocusDownId
         // Log.i("check", "next focus down must be $b")
         // Only concerned about focusing left and right at the moment
+        Log.i("check", "Do we get here?")
         if (direction == View.FOCUS_RIGHT) {
             Log.i("check", "focusSearch:Im here ")
             /* // Try to find the next focusable item in this layout for the supplied direction
@@ -70,7 +71,9 @@ class CustomTitleView @JvmOverloads constructor(
             return super.focusSearch(focused, direction);
         }*/
         }
-
+        if (direction == View.FOCUS_DOWN) {
+            return super.focusSearch(focused, direction);
+        }
         return mTitleView
 
 /* @Override
@@ -181,17 +184,27 @@ class CustomTitleView @JvmOverloads constructor(
         return mTitleViewAdapter
     }
 
+    override fun onRequestFocusInDescendants(
+        direction: Int,
+        previouslyFocusedRect: Rect?
+    ): Boolean {
+        Log.i("checkk", "weird thing got called ")
+        return mTitleView.requestFocus() || super.onRequestFocusInDescendants(
+            direction,
+            previouslyFocusedRect
+        );
+    }
+
     init {
         val root: View = LayoutInflater.from(context).inflate(R.layout.custom_titleview, this)
         mTitleView = root.findViewById<View>(R.id.notif_iv) as ImageView
         walletImageView = root.findViewById<View>(R.id.wallet_iv) as ImageView
-
         Log.i("checkkk", "next id ${mTitleView.nextFocusRightId} ")
         mTitleView.setOnFocusChangeListener { view, b ->
-            if (mTitleView.isFocused){
-                mTitleView.setImageDrawable(getResources(). getDrawable(R. drawable.app_icon_your_company))
-            }else{
-                mTitleView.setImageDrawable(getResources(). getDrawable(R. drawable.ic_notif))
+            if (mTitleView.isFocused) {
+                mTitleView.setImageDrawable(getResources().getDrawable(R.drawable.app_icon_your_company))
+            } else {
+                mTitleView.setImageDrawable(getResources().getDrawable(R.drawable.ic_notif))
             }
         }
     }
