@@ -1,10 +1,11 @@
-package com.fanap.radman
+package com.fanap.radman.ui
 
 import android.os.Bundle
 import android.view.View
 
 import androidx.core.content.ContextCompat
 import androidx.leanback.app.ErrorSupportFragment
+import com.fanap.radman.R
 
 /**
  * This class demonstrates how to extend [ErrorSupportFragment].

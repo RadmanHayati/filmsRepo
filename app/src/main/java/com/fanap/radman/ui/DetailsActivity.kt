@@ -1,7 +1,8 @@
-package com.fanap.radman
+package com.fanap.radman.ui
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.fanap.radman.R
 
 /**
  * Details activity class that loads [VideoDetailsFragment] class.

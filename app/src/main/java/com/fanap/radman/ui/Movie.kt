@@ -1,4 +1,4 @@
-package com.fanap.radman
+package com.fanap.radman.ui
 
 import java.io.Serializable
 

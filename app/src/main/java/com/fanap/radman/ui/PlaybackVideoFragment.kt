@@ -1,4 +1,4 @@
-package com.fanap.radman
+package com.fanap.radman.ui
 
 import android.net.Uri
 import android.os.Bundle

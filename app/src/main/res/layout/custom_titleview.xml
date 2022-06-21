@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/notif_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="24dp"
+        android:focusable="true"
+        android:src="@drawable/ic_notif"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/user_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="850dp"
+        android:focusable="true"
+        android:src="@drawable/ic_user"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/card_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:focusable="true"
+        android:layout_marginStart="750dp"
+        android:src="@drawable/ic_card"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/wallet_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="650dp"
+        android:focusable="true"
+        android:src="@drawable/ic_wallet"
+        android:visibility="visible" />
+</merge>

@@ -1,4 +1,4 @@
-package com.fanap.radman
+package com.fanap.radman.ui
 
 import java.util.Collections
 import java.util.Timer
@@ -33,6 +33,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.fanap.radman.R
 
 /**
  * Loads a grid of cards with movies to browse.
@@ -66,24 +67,25 @@ class MainFragment : BrowseSupportFragment() {
     }
 
     private fun prepareBackgroundManager() {
-
         mBackgroundManager = BackgroundManager.getInstance(activity)
-        mBackgroundManager.attach(activity!!.window)
-        mDefaultBackground = ContextCompat.getDrawable(activity!!, R.drawable.default_background)
+        mBackgroundManager.attach(requireActivity().window)
+        mDefaultBackground =
+            ContextCompat.getDrawable(requireActivity(), R.drawable.default_background)
         mMetrics = DisplayMetrics()
-        activity!!.windowManager.defaultDisplay.getMetrics(mMetrics)
+        requireActivity().windowManager.defaultDisplay.getMetrics(mMetrics)
     }
 
     private fun setupUIElements() {
         title = getString(R.string.browse_title)
+        // badgeDrawable = ContextCompat.getDrawable(requireActivity(), R.drawable.movie)
         // over title
         headersState = BrowseSupportFragment.HEADERS_ENABLED
-        isHeadersTransitionOnBackEnabled = true
+        //  isHeadersTransitionOnBackEnabled = false
 
         // set fastLane (or headers) background color
-        brandColor = ContextCompat.getColor(activity!!, R.color.fastlane_background)
+        brandColor = ContextCompat.getColor(requireActivity(), R.color.fastlane_background)
         // set search icon color
-        searchAffordanceColor = ContextCompat.getColor(activity!!, R.color.search_opaque)
+        searchAffordanceColor = ContextCompat.getColor(requireActivity(), R.color.search_opaque)
     }
 
     private fun loadRows() {
@@ -117,10 +119,7 @@ class MainFragment : BrowseSupportFragment() {
     }
 
     private fun setupEventListeners() {
-        setOnSearchClickedListener {
-            Toast.makeText(activity!!, "Implement your own in-app search", Toast.LENGTH_LONG)
-                .show()
-        }
+//
 
         onItemViewClickedListener = ItemViewClickedListener()
         onItemViewSelectedListener = ItemViewSelectedListener()
@@ -172,7 +171,7 @@ class MainFragment : BrowseSupportFragment() {
     private fun updateBackground(uri: String?) {
         val width = mMetrics.widthPixels
         val height = mMetrics.heightPixels
-        Glide.with(activity!!)
+        Glide.with(requireActivity())
             .load(uri)
             .centerCrop()
             .error(mDefaultBackground)

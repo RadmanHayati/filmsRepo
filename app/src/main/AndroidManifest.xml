@@ -10,20 +10,21 @@
         android:required="false" />
     <uses-feature
         android:name="android.software.leanback"
-        android:required="true" />
+        android:required="true" /> <!-- Make it false to let other devices(not only TVs) use the app-->
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Films">
+        android:theme="@style/Theme.Films"> <!-- Reference to Theme.Leanback -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.Leanback.CustomTitle"
             android:logo="@drawable/app_icon_your_company"
             android:configChanges="keyboard|keyboardHidden|navigation"
             android:screenOrientation="landscape">
@@ -34,13 +35,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name=".ui.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".PlaybackActivity"
+            android:name=".ui.PlaybackActivity"
             android:exported="false" />
         <activity
-            android:name=".BrowseErrorActivity"
+            android:name=".ui.BrowseErrorActivity"
             android:exported="false" />
     </application>
 

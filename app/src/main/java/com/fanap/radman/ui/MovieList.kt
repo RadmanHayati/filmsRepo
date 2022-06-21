@@ -1,4 +1,4 @@
-package com.fanap.radman
+package com.fanap.radman.ui
 
 object MovieList {
     val MOVIE_CATEGORY = arrayOf(
