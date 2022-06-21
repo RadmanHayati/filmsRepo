@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.leanback.widget.TitleViewAdapter
 import com.fanap.radman.R
 
@@ -22,8 +21,10 @@ class CustomTitleView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : RelativeLayout(context, attrs, defStyle), TitleViewAdapter.Provider {
-    var mTitleView: ImageView
+    var notificationImageView: ImageView
     var walletImageView: ImageView
+    var cardImageView: ImageView
+    var accountImageView: ImageView
     lateinit var nextFoundFocusableViewInLayout: View
     val mTitleViewAdapter = object : TitleViewAdapter() {
 
@@ -42,39 +43,28 @@ class CustomTitleView @JvmOverloads constructor(
         // Log.i("check", "next focus down must be $b")
         // Only concerned about focusing left and right at the moment
         Log.i("check", "Do we get here?")
-        if (direction == View.FOCUS_RIGHT) {
-            Log.i("check", "focusSearch:Im here ")
-            /* // Try to find the next focusable item in this layout for the supplied direction
+        if (direction == View.FOCUS_LEFT || direction == View.FOCUS_RIGHT) {
+
+            // Try to find the next focusable item in this layout for the supplied direction
             var nextFoundFocusableViewInLayoutId = -1;
             when (direction) {
-                View.FOCUS_LEFT -> {
-                    nextFoundFocusableViewInLayoutId = focused?.getNextFocusLeftId() ?: 0
-                };
-
-                View.FOCUS_RIGHT -> {
-                    nextFoundFocusableViewInLayoutId = focused?.getNextFocusRightId() ?: 0
-                };
-
+                View.FOCUS_LEFT -> nextFoundFocusableViewInLayoutId = focused?.getNextFocusLeftId() ?: -1;
+                View.FOCUS_RIGHT -> nextFoundFocusableViewInLayoutId = focused?.getNextFocusRightId() ?: -1;
             }
 
             // View id for next focus direction found....get the View
             if (nextFoundFocusableViewInLayoutId != -1) {
                 nextFoundFocusableViewInLayout = findViewById(nextFoundFocusableViewInLayoutId);
             }
+            //  Return the found View in the layout if it's focusable
+            if (nextFoundFocusableViewInLayout != null && nextFoundFocusableViewInLayout.isFocusable()) {
+                return nextFoundFocusableViewInLayout;
+            } else {
+                // No focusable view found in layout...propagate to super (should invoke the BrowseFrameLayout.OnFocusSearchListener
+                return super.focusSearch(focused, direction);
+            }
         }
-
-        //  Return the found View in the layout if it's focusable
-        if (nextFoundFocusableViewInLayout != null && nextFoundFocusableViewInLayout.isFocusable()) {
-            return nextFoundFocusableViewInLayout;
-        } else {
-            // No focusable view found in layout...propagate to super (should invoke the BrowseFrameLayout.OnFocusSearchListener
             return super.focusSearch(focused, direction);
-        }*/
-        }
-        if (direction == View.FOCUS_DOWN) {
-            return super.focusSearch(focused, direction);
-        }
-        return mTitleView
 
 /* @Override
     public View focusSearch(View focused, int direction) {
@@ -176,7 +166,7 @@ class CustomTitleView @JvmOverloads constructor(
     fun setBadgeDrawable(drawable: Drawable?) {
         Log.i("checkkkk", "it is guilty7")
         if (drawable != null) {
-            mTitleView.visibility = GONE
+            notificationImageView.visibility = GONE
         }
     }
 
@@ -189,7 +179,7 @@ class CustomTitleView @JvmOverloads constructor(
         previouslyFocusedRect: Rect?
     ): Boolean {
         Log.i("checkk", "weird thing got called ")
-        return mTitleView.requestFocus() || super.onRequestFocusInDescendants(
+        return notificationImageView.requestFocus() || super.onRequestFocusInDescendants(
             direction,
             previouslyFocusedRect
         );
@@ -197,14 +187,36 @@ class CustomTitleView @JvmOverloads constructor(
 
     init {
         val root: View = LayoutInflater.from(context).inflate(R.layout.custom_titleview, this)
-        mTitleView = root.findViewById<View>(R.id.notif_iv) as ImageView
+        notificationImageView = root.findViewById<View>(R.id.notif_iv) as ImageView
         walletImageView = root.findViewById<View>(R.id.wallet_iv) as ImageView
-        Log.i("checkkk", "next id ${mTitleView.nextFocusRightId} ")
-        mTitleView.setOnFocusChangeListener { view, b ->
-            if (mTitleView.isFocused) {
-                mTitleView.setImageDrawable(getResources().getDrawable(R.drawable.app_icon_your_company))
+        cardImageView = root.findViewById<View>(R.id.card_iv) as ImageView
+        accountImageView = root.findViewById<View>(R.id.user_iv) as ImageView
+        notificationImageView.setOnFocusChangeListener { view, b ->
+            if (notificationImageView.isFocused) {
+                notificationImageView.setImageDrawable(getResources().getDrawable(R.drawable.app_icon_your_company))
             } else {
-                mTitleView.setImageDrawable(getResources().getDrawable(R.drawable.ic_notif))
+                notificationImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_notif))
+            }
+        }
+        walletImageView.setOnFocusChangeListener { view, b ->
+            if (walletImageView.isFocused) {
+                walletImageView.setImageDrawable(getResources().getDrawable(R.drawable.app_icon_your_company))
+            } else {
+                walletImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_wallet))
+            }
+        }
+        cardImageView.setOnFocusChangeListener { view, b ->
+            if (cardImageView.isFocused) {
+                cardImageView.setImageDrawable(getResources().getDrawable(R.drawable.app_icon_your_company))
+            } else {
+                cardImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_card))
+            }
+        }
+        accountImageView.setOnFocusChangeListener { view, b ->
+            if (accountImageView.isFocused) {
+                accountImageView.setImageDrawable(getResources().getDrawable(R.drawable.app_icon_your_company))
+            } else {
+                accountImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_user))
             }
         }
     }
