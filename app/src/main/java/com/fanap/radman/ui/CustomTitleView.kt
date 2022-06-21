@@ -22,7 +22,9 @@ class CustomTitleView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RelativeLayout(context, attrs, defStyle), TitleViewAdapter.Provider {
     var mTitleView: ImageView
-    val mTitleViewAdapter = object : TitleViewAdapter(){
+    var walletImageView: ImageView
+    lateinit var nextFoundFocusableViewInLayout:View
+    val mTitleViewAdapter = object : TitleViewAdapter() {
 
         override fun getSearchAffordanceView(): View {
             TODO("Not yet implemented")
@@ -35,31 +37,108 @@ class CustomTitleView @JvmOverloads constructor(
     }
 
 
-   /*mTitleViewAdapter: TitleViewAdapter = object : TitleViewAdapter() {
+    override fun focusSearch(focused: View?, direction: Int): View {
+        // val a = nextFocusDownId
+        // Log.i("check", "next focus down must be $b")
+        // Only concerned about focusing left and right at the moment
+        if (direction == View.FOCUS_RIGHT) {
+            Log.i("check", "focusSearch:Im here ")
+            /* // Try to find the next focusable item in this layout for the supplied direction
+            var nextFoundFocusableViewInLayoutId = -1;
+            when (direction) {
+                View.FOCUS_LEFT -> {
+                    nextFoundFocusableViewInLayoutId = focused?.getNextFocusLeftId() ?: 0
+                };
 
-        override fun setTitle(titleText: CharSequence) {
-            Log.i("checkkkk", "it is guilty1")
-            this@CustomTitleView.setTitle(titleText)
+                View.FOCUS_RIGHT -> {
+                    nextFoundFocusableViewInLayoutId = focused?.getNextFocusRightId() ?: 0
+                };
+
+            }
+
+            // View id for next focus direction found....get the View
+            if (nextFoundFocusableViewInLayoutId != -1) {
+                nextFoundFocusableViewInLayout = findViewById(nextFoundFocusableViewInLayoutId);
+            }
         }
 
-        override fun setBadgeDrawable(drawable: Drawable) {
-            Log.i("checkkkk", "it is guilty2")
-            //CustomTitleView.this.setBadgeDrawable(drawable);
+        //  Return the found View in the layout if it's focusable
+        if (nextFoundFocusableViewInLayout != null && nextFoundFocusableViewInLayout.isFocusable()) {
+            return nextFoundFocusableViewInLayout;
+        } else {
+            // No focusable view found in layout...propagate to super (should invoke the BrowseFrameLayout.OnFocusSearchListener
+            return super.focusSearch(focused, direction);
+        }*/
         }
 
-        override fun getSearchAffordanceView(): View {
-            Log.i("checkkkk", "it is guilty3")
-            TODO("Not yet implemented")
+        return mTitleView
+
+/* @Override
+    public View focusSearch(View focused, int direction) {
+
+        View nextFoundFocusableViewInLayout = null;
+
+        // Only concerned about focusing left and right at the moment
+        if (direction == View.FOCUS_LEFT || direction == View.FOCUS_RIGHT) {
+
+            // Try to find the next focusable item in this layout for the supplied direction
+            int nextFoundFocusableViewInLayoutId = -1;
+            switch(direction) {
+                case View.FOCUS_LEFT :
+                    nextFoundFocusableViewInLayoutId = focused.getNextFocusLeftId();
+                    break;
+                case View.FOCUS_RIGHT :
+                    nextFoundFocusableViewInLayoutId = focused.getNextFocusRightId();
+                    break;
+            }
+
+            // View id for next focus direction found....get the View
+            if (nextFoundFocusableViewInLayoutId != -1) {
+                nextFoundFocusableViewInLayout = findViewById(nextFoundFocusableViewInLayoutId);
+            }
         }
 
-        override fun setOnSearchClickedListener(listener: OnClickListener) {
-            Log.i("checkkkk", "it is guilty4")
-            // mSearchOrbView.setOnClickListener(listener);
+        //  Return the found View in the layout if it's focusable
+        if (nextFoundFocusableViewInLayout != null && nextFoundFocusableViewInLayout.isFocusable()) {
+            return nextFoundFocusableViewInLayout;
+        } else {
+            // No focusable view found in layout...propagate to super (should invoke the BrowseFrameLayout.OnFocusSearchListener
+            return super.focusSearch(focused, direction);
         }
+    }
 
-        override fun updateComponentsVisibility(flags: Int) {
-            Log.i("checkkkk", "it is guilty4")
-            *//*if ((flags & BRANDING_VIEW_VISIBLE) == BRANDING_VIEW_VISIBLE) {
+    @Override
+    protected boolean onRequestFocusInDescendants(int direction, Rect previouslyFocusedRect) {
+        // Gives focus to the SearchOrb first....if not...default to normal descendant focus search
+        return getSearchAffordanceView().requestFocus() || super.onRequestFocusInDescendants(direction, previouslyFocusedRect);
+    }
+}*/
+
+        /*mTitleViewAdapter: TitleViewAdapter = object : TitleViewAdapter() {
+
+         override fun setTitle(titleText: CharSequence) {
+             Log.i("checkkkk", "it is guilty1")
+             this@CustomTitleView.setTitle(titleText)
+         }
+
+         override fun setBadgeDrawable(drawable: Drawable) {
+             Log.i("checkkkk", "it is guilty2")
+             //CustomTitleView.this.setBadgeDrawable(drawable);
+         }
+
+         override fun getSearchAffordanceView(): View {
+             Log.i("checkkkk", "it is guilty3")
+             TODO("Not yet implemented")
+         }
+
+         override fun setOnSearchClickedListener(listener: OnClickListener) {
+             Log.i("checkkkk", "it is guilty4")
+             // mSearchOrbView.setOnClickListener(listener);
+         }
+
+         override fun updateComponentsVisibility(flags: Int) {
+             Log.i("checkkkk", "it is guilty4")
+             *//*if ((flags & BRANDING_VIEW_VISIBLE) == BRANDING_VIEW_VISIBLE) {
                 updateBadgeVisibility(true);
             } else {
                 mAnalogClockView.setVisibility(View.GONE);
@@ -81,6 +160,7 @@ class CustomTitleView @JvmOverloads constructor(
             }
         }
     }*/
+    }
 
 //    fun setTitle(title: CharSequence?) {
 //        Log.i("checkkkk", "it is guilty6")
@@ -104,5 +184,15 @@ class CustomTitleView @JvmOverloads constructor(
     init {
         val root: View = LayoutInflater.from(context).inflate(R.layout.custom_titleview, this)
         mTitleView = root.findViewById<View>(R.id.notif_iv) as ImageView
+        walletImageView = root.findViewById<View>(R.id.wallet_iv) as ImageView
+
+        Log.i("checkkk", "next id ${mTitleView.nextFocusRightId} ")
+        mTitleView.setOnFocusChangeListener { view, b ->
+            if (mTitleView.isFocused){
+                mTitleView.setImageDrawable(getResources(). getDrawable(R. drawable.app_icon_your_company))
+            }else{
+                mTitleView.setImageDrawable(getResources(). getDrawable(R. drawable.ic_notif))
+            }
+        }
     }
 }

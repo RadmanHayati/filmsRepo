@@ -11,27 +11,9 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="24dp"
         android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusRight="@+id/wallet_iv"
         android:src="@drawable/ic_notif"
-        android:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/user_iv"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="850dp"
-        android:focusable="true"
-        android:src="@drawable/ic_user"
-        android:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/card_iv"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:focusable="true"
-        android:layout_marginStart="750dp"
-        android:src="@drawable/ic_card"
         android:visibility="visible" />
 
     <ImageView
@@ -41,6 +23,40 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="650dp"
         android:focusable="true"
+        android:nextFocusDown="@layout/lb_vertical_grid"
+        android:nextFocusLeft="@id/notif_iv"
+        android:nextFocusRight="@id/card_iv"
+        android:focusableInTouchMode="true"
         android:src="@drawable/ic_wallet"
         android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/card_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:focusable="true"
+        android:nextFocusDown="@layout/lb_vertical_grid"
+        android:focusableInTouchMode="true"
+        android:layout_marginStart="750dp"
+        android:nextFocusLeft="@id/wallet_iv"
+        android:nextFocusRight="@id/user_iv"
+        android:src="@drawable/ic_card"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/user_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="850dp"
+        android:nextFocusDown="@layout/lb_vertical_grid"
+        android:nextFocusLeft="@id/card_iv"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:src="@drawable/ic_user"
+        android:visibility="visible" />
+
+
+
 </merge>
