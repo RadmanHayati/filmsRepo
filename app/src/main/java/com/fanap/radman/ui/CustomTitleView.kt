@@ -2,7 +2,6 @@ package com.fanap.radman.ui
 
 import android.content.Context
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,7 +36,6 @@ class CustomTitleView @JvmOverloads constructor(
 //        override fun setTitle(titleText: CharSequence?) {
 //            this@CustomTitleView.setTitle(titleText)
 //        }
-
     }
 
     override fun focusSearch(focused: View?, direction: Int): View {
