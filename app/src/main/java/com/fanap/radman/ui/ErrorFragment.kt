@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.leanback.app.ErrorSupportFragment
 import com.fanap.radman.R
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * This class demonstrates how to extend [ErrorSupportFragment].

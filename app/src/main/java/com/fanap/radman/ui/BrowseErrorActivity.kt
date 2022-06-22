@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.fanap.radman.R
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * BrowseErrorActivity shows how to use ErrorFragment.
