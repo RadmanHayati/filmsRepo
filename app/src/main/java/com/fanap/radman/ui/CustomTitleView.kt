@@ -40,28 +40,32 @@ class CustomTitleView @JvmOverloads constructor(
 
     override fun focusSearch(focused: View?, direction: Int): View {
         // Only concerned about focusing left and right at the moment
-        if (direction == View.FOCUS_LEFT || direction == View.FOCUS_RIGHT) {
+        try {
+            if (direction == View.FOCUS_LEFT || direction == View.FOCUS_RIGHT) {
 
-            // Try to find the next focusable item in this layout for the supplied direction
-            var nextFoundFocusableViewInLayoutId = -1;
-            when (direction) {
-                View.FOCUS_LEFT -> nextFoundFocusableViewInLayoutId =
-                    focused?.getNextFocusLeftId() ?: -1;
-                View.FOCUS_RIGHT -> nextFoundFocusableViewInLayoutId =
-                    focused?.getNextFocusRightId() ?: -1;
-            }
+                // Try to find the next focusable item in this layout for the supplied direction
+                var nextFoundFocusableViewInLayoutId = -1;
+                when (direction) {
+                    View.FOCUS_LEFT -> nextFoundFocusableViewInLayoutId =
+                        focused?.getNextFocusLeftId() ?: -1;
+                    View.FOCUS_RIGHT -> nextFoundFocusableViewInLayoutId =
+                        focused?.getNextFocusRightId() ?: -1;
+                }
 
-            // View id for next focus direction found....get the View
-            if (nextFoundFocusableViewInLayoutId != -1) {
-                nextFoundFocusableViewInLayout = findViewById(nextFoundFocusableViewInLayoutId);
+                // View id for next focus direction found....get the View
+                if (nextFoundFocusableViewInLayoutId != -1) {
+                    nextFoundFocusableViewInLayout = findViewById(nextFoundFocusableViewInLayoutId);
+                }
+                //  Return the found View in the layout if it's focusable
+                if (nextFoundFocusableViewInLayout.isFocusable) {
+                    return nextFoundFocusableViewInLayout;
+                } else {
+                    // No focusable view found in layout...propagate to super (should invoke the BrowseFrameLayout.OnFocusSearchListener
+                    return super.focusSearch(focused, direction);
+                }
             }
-            //  Return the found View in the layout if it's focusable
-            if (nextFoundFocusableViewInLayout != null && nextFoundFocusableViewInLayout.isFocusable()) {
-                return nextFoundFocusableViewInLayout;
-            } else {
-                // No focusable view found in layout...propagate to super (should invoke the BrowseFrameLayout.OnFocusSearchListener
-                return super.focusSearch(focused, direction);
-            }
+        }catch (e:Exception){
+            return super.focusSearch(focused, direction);
         }
         return super.focusSearch(focused, direction);
     }

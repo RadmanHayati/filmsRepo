@@ -39,12 +39,10 @@ class MainFragment : BrowseSupportFragment() {
     private lateinit var mMetrics: DisplayMetrics
     private var mBackgroundTimer: Timer? = null
     private var mBackgroundUri: String? = null
-    private var viewModel: MoviesViewModel? = null
+    lateinit var viewModel: MoviesViewModel
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Log.i(TAG, "onCreate")
-
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[MoviesViewModel::class.java]
         prepareBackgroundManager()
@@ -55,7 +53,10 @@ class MainFragment : BrowseSupportFragment() {
     }
 
     private fun loadData() {
-        viewModel?.loadMoviesList()
+        viewModel.loadMoviesList()
+        viewModel.movies.observe(viewLifecycleOwner) {
+            Toast.makeText(this.context,"${it.data}",Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onDestroy() {
